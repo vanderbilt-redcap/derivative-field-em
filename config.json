@@ -7,7 +7,7 @@
 
 	"authors": [
 		{
-			"name": "Vaishali Jagytap",
+			"name": "Vaishali Jagtap",
 			"email": "vaishali.jagtap@vumc.org",
 			"institution": "Vanderbilt University Medical Center"
 		}
@@ -19,10 +19,6 @@
 	],
 
 	"description": "Allows users to specify source field (or multiple fields or infinitely repeating instrument fields), a target field and a prompt. A clickable button will appear with a target field on a form/survey where the prompt results operating on source field(s) and deposits results in target field.",
-
-	"no-auth-pages": [
-		"get-audio-filename"
-	],
 
 	"project-settings" : [
 		{

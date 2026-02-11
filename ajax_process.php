@@ -47,7 +47,6 @@ if (isset($_POST['action']) && $_POST['action'] == 'process') {
     }
 
     $completionDecoded = curlAPIPost($api_key, $endpoint . "chat/completions?api-version=" . $api_version, json_encode($data), $headers);
-    //$completionDecoded = json_decode($complete,true);
     if (!is_array($completionDecoded)) {
         $completionDecoded = [];
         $response['errors'] = "ERROR - No response returned from the AI service";
