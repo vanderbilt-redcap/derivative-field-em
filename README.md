@@ -1,15 +1,10 @@
-## REDCap RAG AI ChatBot
+## Derivative Fields
 
 ### Description
-Prototype module for REDCap-RAG (Retrieval Augmented Generation) AI Integration. Currently working towards using OpenAI to allow users to integrate external knowledge bases (i.e. Files inside REDCap folders) during the response generation process.
+Allows users to specify source field (or multiple fields or infinitely repeating instrument fields), a target field and a prompt. A clickable button will appear with a target field on a form/survey where the prompt results operating on source field(s) and deposits results in target field.
 
 ### Project-Level Settings
-* **REDCap Folder:** This must be set for the purpose of external source to utilize to generate response. OpenAI API will generate response based on uploaded file(s) inside selected REDCap folder.
-* **OpenAI Crediential:** A valid Credientials from your Azure OpenAI instance. 
-* * **OpenAI API Key**
-* * **OpenAI Endpoint URL**
-* * **API Model Version**
-* **Enter Suffix:** Add Prompt text to append at the end of question asked in chat window to get response from uploaded files in REDCap folder. E.g. "Answer the question based on the uploaded files only."
-
-### Usage
-After downloading and enabling this module on your REDCap instance. User can enable this module for any project and configure settings at project-level. An chatbot icon will appear at the right bottom of each page inside a project. Clicking this icon, user can interact with AI by entering question and will get response based uploaded files inside REDCap folder selected at configuration.
+* **Source Field:** REDCap input fields to utilize as a part of a prompt.
+* **Target Field:** REDCap input field where result will be populated.
+* **Prompt:** Add Prompt text
+* **Display on surveys:** whether to include on Survey page or not. (By default, it will be included on Data Entry page)
