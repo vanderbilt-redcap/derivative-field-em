@@ -12,12 +12,45 @@ if (isset($_POST['action']) && $_POST['action'] == 'process') {
     $api_version = '2025-01-01-preview';
     $prompt = nl2br(htmlspecialchars($module->getProjectSetting('prompt')));
 
-    $data = [
+    $fields = $module->getProjectSetting('source-field');
+
+    //$recordField = $module->getRecordIdField();
+    array_push($fields, 'par_joindate_utc');
+    $chatGptString = "";
+    //if (!empty($_GET['id'])) {
+        $data = \REDCap::getData([
+            "project_id" => $projectId,
+            "records" => 1,
+            "fields" => $fields,
+            "return_format" => "json-array"
+        ]);
+
+        foreach($data as $recordDetails) {
+            foreach ($fields as $field) {
+                if ($field == 'par_joindate_utc') continue;
+                if ($recordDetails[$field] != '') {
+                    $list[] = $recordDetails[$field];
+                }
+            }
+        }
+        foreach ($fields as $field) {
+            if ($field == 'par_joindate_utc') continue;
+            if ($data[$field] != '') {
+                $list[] = $data[$field];
+            }
+        }
+        if (!empty($list)) {
+            $listString = "[".implode(", ", $list)."]";
+        }
+    //}
+
+    $prompt .= "<br>Limit your response to what is asked. Do not add any additional content, such as introductory remarks, explanations, etc.!";
+    $options = [
         "model" => $api_version,
         "messages" => [
             [
                 "role" => "user",
-                "content" => $prompt
+                "content" => $prompt."\n".$listString
             ]
         ],
         "temperature" => 0.2,
@@ -25,7 +58,6 @@ if (isset($_POST['action']) && $_POST['action'] == 'process') {
         "frequency_penalty" => 0,
         "presence_penalty" => 0
     ];
-    $data_json = json_encode($data, JSON_UNESCAPED_SLASHES);
     // Build endpoint URL
     $url = $endpoint . "chat/completions";
     $url .= "?api-version=".urlencode($api_version);
@@ -46,7 +78,7 @@ if (isset($_POST['action']) && $_POST['action'] == 'process') {
         $headers[] = "Authorization: Bearer $api_key";
     }
 
-    $completionDecoded = curlAPIPost($api_key, $endpoint . "chat/completions?api-version=" . $api_version, json_encode($data), $headers);
+    $completionDecoded = curlAPIPost($api_key, $endpoint . "chat/completions?api-version=" . $api_version, json_encode($options), $headers);
     if (!is_array($completionDecoded)) {
         $completionDecoded = [];
         $response['errors'] = "ERROR - No response returned from the AI service";
