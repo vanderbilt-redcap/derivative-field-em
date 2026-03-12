@@ -14,7 +14,7 @@ function populateResponse() {
             alert("Something went wrong!");
         } else {
             //typeWriterEffect(chatElement.querySelector("p"), data.message, 5); // Type into 'myDiv' with 50ms delay per character
-            $("input[name='"+targetField+"']").val(data.message);
+            $("[name='"+targetField+"']").val(data.message);
         }
         showProgress(0,0);
     })
