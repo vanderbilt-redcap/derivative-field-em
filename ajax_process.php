@@ -50,7 +50,7 @@ if (isset($_POST['action']) && $_POST['action'] == 'process') {
         "messages" => [
             [
                 "role" => "user",
-                "content" => $prompt."\n".$listString
+                "content" => $prompt."<br>".$listString
             ]
         ],
         "temperature" => 0.2,
@@ -91,8 +91,8 @@ if (isset($_POST['action']) && $_POST['action'] == 'process') {
         $response['status'] = 0;
     }
 
-    $chatGptResponse = filter_tags(trim($completionDecoded["choices"][0]["message"]["content"] ?? ""));
-    $response['message'] = $chatGptResponse;
+    $chatGptResponse = trim($completionDecoded["choices"][0]["message"]["content"] ?? "");
+    $response['message'] = htmlspecialchars_decode($chatGptResponse);
 }
 function curlAPIPost($api_key, $url, $data, $headers = [])
 {
