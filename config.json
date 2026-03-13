@@ -26,13 +26,13 @@
 			"repeatable": true,
 			"name": "Source Field<br/><span style='font-size:11px; color:#800000;'>REDCap input fields to utilize as a part of a prompt</span>",
 			"type": "field-list",
-			"field-type": "descriptive"
+			"field-type": "textarea"
 		},
 		{
 			"key": "target-field",
 			"name": "Target Field<br/><span style='font-size:11px; color:#800000;'>REDCap input fields to utilize as a part of a prompt</span>",
 			"type": "field-list",
-			"field-type": "descriptive"
+			"field-type": "textarea"
 		},
 		{
 			"key" : "prompt",
