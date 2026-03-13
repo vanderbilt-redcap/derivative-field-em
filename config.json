@@ -36,7 +36,7 @@
 		},
 		{
 			"key" : "prompt",
-			"name" : "Enter Prompt",
+			"name" : "Enter Prompt<br><span style='font-size:11px; color:#800000;'>Note: Final prompt will be \"{YOUR_PROMPT}<br>\n  Limit your response to what is asked. Do not add any additional content, such as introductory remarks, explanations, etc.!<br>[{COMMA_SEPERATED_VALUES_FROM_SOURCE_FILEDS}]\"</span>",
 			"type" : "textarea"
 		},
 		{
