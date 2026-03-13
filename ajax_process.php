@@ -17,24 +17,21 @@ if (isset($_POST['action']) && $_POST['action'] == 'process') {
     //$recordField = $module->getRecordIdField();
     array_push($fields, 'par_joindate_utc');
     $chatGptString = "";
-    //if (!empty($_GET['id'])) {
+    if (!empty($_POST['record'])) {
         $data = \REDCap::getData([
             "project_id" => $projectId,
-            "records" => 1,
+            "records" => [$_POST['record']],
             "fields" => $fields,
             "return_format" => "json-array"
         ]);
-
         foreach($data as $recordDetails) {
             foreach ($fields as $field) {
-                if ($field == 'par_joindate_utc') continue;
                 if ($recordDetails[$field] != '') {
                     $list[] = $recordDetails[$field];
                 }
             }
         }
         foreach ($fields as $field) {
-            if ($field == 'par_joindate_utc') continue;
             if ($data[$field] != '') {
                 $list[] = $data[$field];
             }
@@ -42,7 +39,7 @@ if (isset($_POST['action']) && $_POST['action'] == 'process') {
         if (!empty($list)) {
             $listString = "[".implode(", ", $list)."]";
         }
-    //}
+    }
 
     $prompt .= "<br>Limit your response to what is asked. Do not add any additional content, such as introductory remarks, explanations, etc.!";
     $options = [

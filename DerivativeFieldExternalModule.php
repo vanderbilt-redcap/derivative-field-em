@@ -18,12 +18,13 @@ class DerivativeFieldExternalModule extends AbstractExternalModule {
         if ($enabledFlag) {
             $targetField = $this->getProjectSetting('target-field');
             //$sourceFields = $this->getSubSettings('source-fields');
-            $buttonHtml = "<button class='btn btn-defaultrc btn-xs fs11' style='color:#800000;margin-left:3px;padding:1px 5px 0;' onclick='populateResponse(); return false;'><i class='fas fa-wand-magic-sparkles' style='margin-right:4px;'></i> Evaluate</button>";
+
+            $buttonHtml = '<button type="button" id="evaluate-prompt-btn" class="btn btn-defaultrc btn-xs fs11" style="color:#800000;margin-left:3px;padding:1px 5px 0;" this-record="'.$record.'"><i class="fas fa-wand-magic-sparkles" style="margin-right:4px;"></i> Evaluate</button>';
             $infoHtml = "<a href='javascript:;' onclick='showPromptInfo(); return false;'> <i class='fas fa-terminal'></i></a>";
             ?>
             <script>
                 var targetField = "<?=$targetField?>";
-                var buttonHTML = "<?=$buttonHtml?>";
+                var buttonHTML = '<?=$buttonHtml?>';
                 var infoHTML = "<?=$infoHtml?>";
                 var ajax_url = "<?php echo $this->getUrl('ajax_process.php'); ?>";
             </script>
