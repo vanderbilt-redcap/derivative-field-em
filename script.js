@@ -1,12 +1,11 @@
 $( document ).ready(function() {
-    insertButton(targetField, buttonHTML);
-
-    $("#evaluate-prompt-btn").click(function () {
+    $(".evaluate-prompt-btn").click(function () {
         showProgress(1,0);
+        var targetField = $(this).attr("this-target");
         $.ajax({
             method: 'POST',
             url: ajax_url,
-            data: { action: "process", record: $(this).attr("this-record")},
+            data: { action: "process", record: $(this).attr("this-record"), num: $(this).attr("this-setup")},
             dataType: 'json'
         })
         .done(function(data) {

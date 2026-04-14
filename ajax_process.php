@@ -7,15 +7,16 @@ $projectId = $module->getProjectId();
 $endpoints = $module->getProjectSetting('endpoint');
 $api_versions = $module->getProjectSetting('api-version');*/
 if (isset($_POST['action']) && $_POST['action'] == 'process') {
+    $num = $_POST['num'];
     $api_key = '81ce3b70e4f94439aaaf57c4682ba5f8';
     $endpoint = 'https://vumc-openai-16.openai.azure.com/openai/deployments/gpt-4o-mini/';
     $api_version = '2025-01-01-preview';
-    $prompt = nl2br(htmlspecialchars($module->getProjectSetting('prompt')));
+    $prompt = nl2br(htmlspecialchars($module->getProjectSetting('prompt')[$num]));
+    // Get the project's Record ID field
+    $record_id_field = REDCap::getRecordIdField();
 
-    $fields = $module->getProjectSetting('source-field');
+    $fields = [$module->getProjectSetting('source-field')[$num]];
 
-    //$recordField = $module->getRecordIdField();
-    array_push($fields, 'par_joindate_utc');
     $chatGptString = "";
     if (!empty($_POST['record'])) {
         $data = \REDCap::getData([
@@ -37,7 +38,7 @@ if (isset($_POST['action']) && $_POST['action'] == 'process') {
             }
         }
         if (!empty($list)) {
-            $listString = "[".implode(", ", $list)."]";
+            $listString = implode(", ", $list);
         }
     }
 
