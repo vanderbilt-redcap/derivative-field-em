@@ -2,17 +2,28 @@ $( document ).ready(function() {
     $(".evaluate-prompt-btn").click(function () {
         showProgress(1,0);
         var targetField = $(this).attr("this-target");
+        var sourceField = $(this).attr("this-source");
+
+        var params = {};
+        params['action'] = 'process';
+        params['num'] = $(this).attr("this-setup");
+
+        if ($("#"+sourceField).length > 0) {
+            params['sourceValue'] = $("#"+sourceField).val();
+        } else {
+            params['record'] = $(this).attr("this-record");
+        }
+
         $.ajax({
             method: 'POST',
             url: ajax_url,
-            data: { action: "process", record: $(this).attr("this-record"), num: $(this).attr("this-setup")},
+            data: params,
             dataType: 'json'
         })
         .done(function(data) {
             if (data.status != 1) {
                 alert("Something went wrong!");
             } else {
-                //typeWriterEffect(chatElement.querySelector("p"), data.message, 5); // Type into 'myDiv' with 50ms delay per character
                 $("[name='"+targetField+"']").val(data.message);
             }
             showProgress(0,0);

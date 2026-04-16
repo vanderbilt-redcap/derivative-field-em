@@ -12,33 +12,38 @@ if (isset($_POST['action']) && $_POST['action'] == 'process') {
     $endpoint = 'https://vumc-openai-16.openai.azure.com/openai/deployments/gpt-4o-mini/';
     $api_version = '2025-01-01-preview';
     $prompt = nl2br(htmlspecialchars($module->getProjectSetting('prompt')[$num]));
-    // Get the project's Record ID field
-    $record_id_field = REDCap::getRecordIdField();
 
-    $fields = [$module->getProjectSetting('source-field')[$num]];
+    if (isset($_POST['sourceValue'])) {
+        $listString = $_POST['sourceValue'];
+    } else {
+        // Get the project's Record ID field
+        $record_id_field = REDCap::getRecordIdField();
 
-    $chatGptString = "";
-    if (!empty($_POST['record'])) {
-        $data = \REDCap::getData([
-            "project_id" => $projectId,
-            "records" => [$_POST['record']],
-            "fields" => $fields,
-            "return_format" => "json-array"
-        ]);
-        foreach($data as $recordDetails) {
-            foreach ($fields as $field) {
-                if ($recordDetails[$field] != '') {
-                    $list[] = $recordDetails[$field];
+        $fields = [$module->getProjectSetting('source-field')[$num]];
+
+        $chatGptString = "";
+        if (!empty($_POST['record'])) {
+            $data = \REDCap::getData([
+                "project_id" => $projectId,
+                "records" => [$_POST['record']],
+                "fields" => $fields,
+                "return_format" => "json-array"
+            ]);
+            foreach($data as $recordDetails) {
+                foreach ($fields as $field) {
+                    if ($recordDetails[$field] != '') {
+                        $list[] = $recordDetails[$field];
+                    }
                 }
             }
-        }
-        foreach ($fields as $field) {
-            if ($data[$field] != '') {
-                $list[] = $data[$field];
+            foreach ($fields as $field) {
+                if ($data[$field] != '') {
+                    $list[] = $data[$field];
+                }
             }
-        }
-        if (!empty($list)) {
-            $listString = implode(", ", $list);
+            if (!empty($list)) {
+                $listString = implode(", ", $list);
+            }
         }
     }
 

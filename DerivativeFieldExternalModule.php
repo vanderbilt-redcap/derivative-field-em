@@ -26,7 +26,8 @@ class DerivativeFieldExternalModule extends AbstractExternalModule {
             }
             if ($setting == true) {
                 $targetField = $this->getProjectSetting('target-field')[$num];
-                $buttonHtml = '<button type="button" class="evaluate-prompt-btn btn btn-defaultrc btn-xs fs11" style="color:#800000;margin-left:3px;padding:1px 5px 0;" this-record="'.$record.'" this-setup="'.$num.'" this-target="'.$targetField.'"><i class="fas fa-wand-magic-sparkles" style="margin-right:4px;"></i> Evaluate</button>';
+                $sourceField = $this->getProjectSetting('source-field')[$num];
+                $buttonHtml = '<button type="button" class="evaluate-prompt-btn btn btn-defaultrc btn-xs fs11" style="color:#800000;margin-left:3px;padding:1px 5px 0;" this-record="'.$record.'" this-setup="'.$num.'" this-target="'.$targetField.'" this-source="'.$sourceField.'"><i class="fas fa-wand-magic-sparkles" style="margin-right:4px;"></i> Evaluate</button>';
                 $infoHtml = "<a href='javascript:;' onclick='showPromptInfo(); return false;'> <i class='fas fa-terminal'></i></a>";
                 ?>
                 <script>
